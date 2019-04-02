@@ -1,0 +1,17 @@
+{
+  "extends": ["tslint:latest"],
+  "rules": {
+    "interface-name": [true, "never-prefix"],
+    // TODO: allow devDependencies only in **/*.spec.ts files:
+    // waiting on https://github.com/palantir/tslint/pull/3708
+    "no-implicit-dependencies": [true, "dev"],
+    "no-var-keyword": true,
+    "member-access": [true, "no-public"],
+    "no-console": false,
+    "rules": { "typedef": [true, "parameter"] },
+    "no-empty": false,
+    "no-bitwise": false,
+    "no-angle-bracket-type-assertion": false,
+    "no-unused-expression": false
+  }
+}

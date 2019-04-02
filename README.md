@@ -1,2 +1,3 @@
-# ts-image-precessor
-Resize, rotate and sharpen images in TypeScript &amp; Angular
+# TypeScript image processor
+
+Resize, rotate and sharpen images in TypeScript & Angular
