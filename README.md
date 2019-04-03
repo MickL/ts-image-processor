@@ -11,7 +11,7 @@ Available functions:
 - rotate
 - mirror
 
-_I recommend to always use `resizeAndSharpen` instead of `resize`_
+_I recommend to always use `resizeAndSharpen` instead of `resize`_, that's what Photoshop does, too ;)
 
 ## Demo
 See the demo [here](https://www.lawitzke.com/dev/typescript-image-processor/)
