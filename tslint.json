@@ -15,6 +15,11 @@
     "no-unused-expression": false,
     "arrow-parens": false,
     "quotemark": [true, "single"],
-    "max-line-length": false
+    "max-line-length": false,
+    "no-trailing-whitespace": [
+      true,
+      "ignore-comments",
+      "ignore-blank-lines"
+    ]
   }
 }
