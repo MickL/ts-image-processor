@@ -1,8 +1,14 @@
+import { getImageForBlob } from './helper';
+
 class CanvasServiceSrc {
-  readonly canvas         = document.createElement('canvas');
-  readonly canvasCtx      = this.canvas.getContext('2d') as CanvasRenderingContext2D;
+  private canvas         = document.createElement('canvas');
+  private canvasCtx      = this.canvas.getContext('2d') as CanvasRenderingContext2D;
   private helperCanvas    = document.createElement('canvas');
   private helperCanvasCtx = this.helperCanvas.getContext('2d') as CanvasRenderingContext2D;
+  private defaultOptions = {
+    jpgQuality: 0.9,
+    type: 'image/jpeg',
+  };
 
   constructor() {
   }
@@ -17,17 +23,12 @@ class CanvasServiceSrc {
 
   drawBlob(blob: string): Promise<void> {
     return new Promise<void>(resolve => {
-      let img: any = document.createElement('img');
-
-      img.onload = () => {
-        this.canvas.width  = img.naturalWidth || img.width;
-        this.canvas.height = img.naturalHeight || img.height;
-        this.canvasCtx.drawImage(img as HTMLImageElement, 0, 0);
-        img = null;
+      getImageForBlob(blob).then(img => {
+        this.canvas.width  = img.width;
+        this.canvas.height = img.height;
+        this.canvasCtx.drawImage(img.element, 0, 0);
         resolve();
-      };
-
-      img.src = blob;
+      });
     });
   }
 
@@ -36,19 +37,21 @@ class CanvasServiceSrc {
     this.canvas.height = height;
   }
 
+  crop(width: number, height: number) {
+    this.helperCanvas.width  = width;
+    this.helperCanvas.height = height;
+    this.helperCanvasCtx.drawImage(this.canvas, 0, 0, width, height, 0, 0, width, height);
+    this.canvas.width = width;
+    this.canvas.height = height;
+    this.canvasCtx.drawImage(this.helperCanvas, 0, 0);
+  }
+
   getCanvas(): HTMLCanvasElement {
     return this.canvas;
   }
 
-  getDataUrl(type?: string, quality?: any): string {
+  getDataUrl(type = this.defaultOptions.type, quality = this.defaultOptions.jpgQuality): string {
     return this.canvas.toDataURL(type, quality);
-  }
-
-  getCropDataUrl(width: number, height: number, type?: string, quality?: any): string {
-    this.helperCanvas.width  = width;
-    this.helperCanvas.height = height;
-    this.helperCanvasCtx.drawImage(this.canvas, 0, 0, width, height, 0, 0, width, height);
-    return this.helperCanvas.toDataURL(type, quality);
   }
 }
 

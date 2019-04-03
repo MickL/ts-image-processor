@@ -12,6 +12,9 @@
     "no-empty": false,
     "no-bitwise": false,
     "no-angle-bracket-type-assertion": false,
-    "no-unused-expression": false
+    "no-unused-expression": false,
+    "arrow-parens": false,
+    "quotemark": [true, "single"],
+    "max-line-length": false
   }
 }
