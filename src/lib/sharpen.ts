@@ -1,13 +1,29 @@
+import { CanvasService } from './canvas.service';
+import { OutputOptions, SharpenOptions } from './models';
+
+// TODO: Resize multiple blob's at once
+// TODO: Accept File, too
+export function sharpen(blob: string, sharpenOptions: SharpenOptions, outputOptions: OutputOptions = {}): Promise<string> {
+  return new Promise<string>(resolve => {
+    _sharpen(blob, sharpenOptions).then((() => {
+      resolve(CanvasService.getDataUrl(outputOptions.type, outputOptions.jpgQuality));
+    }));
+  });
+}
+
 /**
  * @see http://www.html5rocks.com/en/tutorials/canvas/imagefilters/
  * @see http://stackoverflow.com/questions/18922880/html5-canvas-resize-downscale-image-high-quality/19235791#19235791
  */
-import { CanvasService } from './canvas.service';
+export function _sharpen(blob: string, options: SharpenOptions): Promise<void> {
+  return new Promise(resolve => {
+    if (options.sharpness <= 0) {
+      resolve();
+      return;
+    }
 
-export function sharpen(blob: string, sharpness = 0.15): Promise<string> {
-  return new Promise<string>(resolve => {
-    // console.log(`Sharpening image by ${sharpness * 100}%`);
-    //
+    console.log(`Sharpening image by ${options.sharpness * 100}%`);
+
     // CanvasService.drawBlob(blob).then(() => {
     //   const imgWidth  = CanvasService.getCanvas().width;
     //   const imgHeight = CanvasService.getCanvas().height;

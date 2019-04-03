@@ -2,6 +2,8 @@ import { CanvasService } from './canvas.service';
 import { getImageForBlob } from './helper';
 import { OutputOptions, ResizeOptions } from './models';
 
+// TODO: Resize multiple blob's at once
+// TODO: Accept File, too
 export function resize(blob: string, resizeOptions: ResizeOptions, outputOptions: OutputOptions = {}): Promise<string> {
   return new Promise(resolve => {
     _resize(blob, resizeOptions).then(() => {
@@ -16,9 +18,8 @@ export function resize(blob: string, resizeOptions: ResizeOptions, outputOptions
  * @see http://stackoverflow.com/a/19235791/5688490
  * @see http://stackoverflow.com/a/19262385/5688490
  */
-// TODO: Resize multiple blob's at once
-export function _resize(blob: string, options: ResizeOptions): Promise<string> {
-  return new Promise<string>(resolve => {
+export function _resize(blob: string, options: ResizeOptions): Promise<void> {
+  return new Promise(resolve => {
     getImageForBlob(blob).then(img => {
       const resizeNeeded = img.width > options.maxWidth || img.height > options.maxHeight;
 

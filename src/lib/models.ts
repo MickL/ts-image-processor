@@ -3,6 +3,11 @@ export interface ResizeOptions {
   maxHeight: number;
 }
 
+export interface SharpenOptions {
+  sharpness: number;
+  onlyWhenResizedPrct?: number;
+}
+
 export interface OutputOptions {
   jpgQuality?: number;
   type?: string;

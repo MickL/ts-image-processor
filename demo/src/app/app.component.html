@@ -1,0 +1,107 @@
+<div class="container">
+  <h1 id="title">TypeScript image processor demo</h1>
+
+  <div class="section">
+    <h3>Source image</h3>
+
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <div class="form-group" style="overflow: hidden;">
+          <input #fileInput type="file" id="file" accept="image/jpeg, image/jpg, image/png"
+                 (change)="onFileInputChange(fileInput.files[0])">
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <img [src]="imgSource" alt="source" class="img-fluid" *ngIf="imgSource">
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngIf="imgSource">
+    <div class="section">
+      <h3>Resize & sharpen</h3>
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <div class="row">
+            <div class="col-12 col-md-5">
+              <div class="form-group">
+                <label for="maxWidth">maxWidth</label>
+                <input #maxWidth id="maxWidth" type="number" class="form-control" value="1080" min="1">
+              </div>
+              <div class="form-group">
+                <label for="maxHeight">maxHeight</label>
+                <input #maxHeight id="maxHeight" type="number" class="form-control" value="1080" min="1">
+              </div>
+              <div class="form-group">
+                <label for="sharpness">sharpness</label>
+                <input #sharpness id="sharpness" type="number" class="form-control" value="0.15" min="1">
+              </div>
+              <div class="form-group text-right">
+                <div class="btn btn-primary" (click)="onResize(maxWidth.value, maxHeight.value, sharpness.value)">
+                  Resize
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+          <ng-container *ngIf="resizeIsLoading || resizeImgResult">
+            <small *ngIf="resizeIsLoading">Processing...</small>
+            <ng-container *ngIf="resizeImgResult">
+              <img [src]="resizeImgResult" alt="source" class="img-fluid">
+              <div>
+                <small>Processed in {{resizeProcessingTime}}ms</small>
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>Rotate & mirror</h3>
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <div class="form-group">
+            <div class="form-group">
+              <div class="form-row">
+                <div class="col-6">
+                  <div class="btn btn-secondary btn-sm btn-block" (click)="rotateImgResult = imgSource">
+                    Use source image
+                  </div>
+                </div>
+                <div class="col-6">
+                  <button class="btn btn-secondary btn-sm btn-block" (click)="rotateImgResult = resizeImgResult" [disabled]="!resizeImgResult">
+                    Use resized image
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="form-group" *ngIf="rotateImgResult">
+              <div class="btn btn-primary" (click)="onRotate()">
+                Rotate
+              </div>
+            </div>
+            <div class="form-group" *ngIf="rotateImgResult">
+              <div class="btn btn-primary" (click)="onMirror()">
+                Mirror
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6">
+          <ng-container *ngIf="rotateIsLoading || rotateImgResult">
+            <small *ngIf="resizeIsLoading">Processing...</small>
+            <ng-container *ngIf="rotateImgResult">
+              <img [src]="rotateImgResult" alt="source" class="img-fluid">
+              <div>
+                <small>Processed in {{rotateProcessingTime}}ms</small>
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>
