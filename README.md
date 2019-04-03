@@ -46,4 +46,5 @@ Feel free to create pull requests
 - [ ] Operations should be pipable
 - [ ] Accept blob OR file for all functions
 - [ ] Accept multiple blob's / file's
-- [ ] Write documentation with included [typedoc](https://typedoc.org/)
+- [ ] Use Web Workers
+- [ ] Write advanced documentation with included [typedoc](https://typedoc.org/)
