@@ -57,11 +57,11 @@ export function _resize(blob: string, options: ResizeOptions): Promise<void> {
           for (let i = 2; i < downscalingSteps; i++) {
             oldScale         = currentStepScale;
             currentStepScale = currentStepScale * .5;
-            CanvasService.drawImage(CanvasService.getCanvas(), img.width * currentStepScale, img.height * currentStepScale, img.width * oldScale, img.height * oldScale);
+            CanvasService.drawImage(CanvasService.canvas, img.width * currentStepScale, img.height * currentStepScale, img.width * oldScale, img.height * oldScale);
           }
 
           // Down-scaling step i+1 (draw final result)
-          CanvasService.drawImage(CanvasService.getCanvas(), newWidth, newHeight, img.width * currentStepScale, img.height * currentStepScale);
+          CanvasService.drawImage(CanvasService.canvas, newWidth, newHeight, img.width * currentStepScale, img.height * currentStepScale);
           CanvasService.crop(newWidth, newHeight);
         } else {
           // The image can directly be resized to the final dimensions

@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { resizeAndSharpen, resize, rotate, mirror } from '../../../../Documents/Git/ts-image-precessor/build/main';
+import { resizeAndSharpen, resize, rotate, mirror } from '../../../build/main';
 
 @Component({
   selector:    'app-root',

@@ -1,8 +1,8 @@
 import { getImageForBlob } from './helper';
 
 class CanvasServiceSrc {
-  private canvas         = document.createElement('canvas');
-  private canvasCtx      = this.canvas.getContext('2d') as CanvasRenderingContext2D;
+  readonly canvas         = document.createElement('canvas');
+  readonly canvasCtx      = this.canvas.getContext('2d') as CanvasRenderingContext2D;
   private helperCanvas    = document.createElement('canvas');
   private helperCanvasCtx = this.helperCanvas.getContext('2d') as CanvasRenderingContext2D;
   private defaultOptions = {
@@ -44,10 +44,6 @@ class CanvasServiceSrc {
     this.canvas.width = width;
     this.canvas.height = height;
     this.canvasCtx.drawImage(this.helperCanvas, 0, 0);
-  }
-
-  getCanvas(): HTMLCanvasElement {
-    return this.canvas;
   }
 
   getDataUrl(type = this.defaultOptions.type, quality = this.defaultOptions.jpgQuality): string {
