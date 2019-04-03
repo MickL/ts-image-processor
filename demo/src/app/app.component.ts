@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { getBlobForFile, resizeAndSharpen, resize, rotate, mirror } from '../../../build/main';
+import { getBlobForFile, mirror, resizeAndSharpen, rotate } from 'ts-image-processor';
 
 @Component({
   selector:    'app-root',

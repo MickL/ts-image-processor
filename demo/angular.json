@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "image-sandbox": {
+    "ts-image-processsor-demo": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -17,14 +17,15 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/image-sandbox",
+            "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/.htaccess"
             ],
             "styles": [
               "src/styles.scss"
@@ -62,18 +63,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "image-sandbox:build"
+            "browserTarget": "ts-image-processsor-demo:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "image-sandbox:build:production"
+              "browserTarget": "ts-image-processsor-demo:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "image-sandbox:build"
+            "browserTarget": "ts-image-processsor-demo:build"
           }
         },
         "test": {
@@ -107,7 +108,7 @@
         }
       }
     },
-    "image-sandbox-e2e": {
+    "ts-image-processsor-demo-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "prefix": "",
@@ -116,11 +117,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "image-sandbox:serve"
+            "devServerTarget": "ts-image-processsor-demo:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "image-sandbox:serve:production"
+              "devServerTarget": "ts-image-processsor-demo:serve:production"
             }
           }
         },
@@ -136,5 +137,5 @@
       }
     }
   },
-  "defaultProject": "image-sandbox"
+  "defaultProject": "ts-image-processsor-demo"
 }

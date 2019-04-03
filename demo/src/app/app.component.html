@@ -95,7 +95,7 @@
             <small *ngIf="resizeIsLoading">Processing...</small>
             <ng-container *ngIf="rotateImgResult">
               <img [src]="rotateImgResult" alt="source" class="img-fluid">
-              <div>
+              <div *ngIf="rotateProcessingTime">
                 <small>Processed in {{rotateProcessingTime}}ms</small>
               </div>
             </ng-container>
