@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { resizeAndSharpen, resize, rotate, mirror } from '../../../build/main';
+import { getBlobForFile, resizeAndSharpen, resize, rotate, mirror } from '../../../build/main';
 
 @Component({
   selector:    'app-root',
@@ -20,13 +20,9 @@ export class AppComponent implements OnInit {
     this.fileInput.nativeElement.value = '';
     this.clear();
 
-    const reader = new FileReader();
-
-    reader.addEventListener('load', () => {
-      this.imgSource = reader.result as string;
+    getBlobForFile(file).then(blob => {
+      this.imgSource = blob;
     });
-
-    reader.readAsDataURL(file);
   }
 
   clear() {
