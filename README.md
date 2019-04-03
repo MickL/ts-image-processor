@@ -25,7 +25,7 @@ npm i ts-image-processor -S
 ```
 import { getBlobForFile, resizeAndSharpen } from 'ts-image-processor';
 
-// Convert file-object(e.g. from input) to blob (base64-string)
+// Optionally convert File-object to blob (base64-string), e.g. if you have a file from <input>
 getBlobForFile(file).then(blob => {
   // Use any of the functions with an existing blob (base64-string)
   resizeAndSharpen(blob, {
