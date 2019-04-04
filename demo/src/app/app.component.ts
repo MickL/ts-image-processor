@@ -8,7 +8,7 @@ import {
   imageProcessor,
   applyExifOrientation,
   noop,
-} from '../../../build/main';
+} from 'ts-image-processor';
 
 @Component({
   selector:    'app-root',
