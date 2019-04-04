@@ -51,7 +51,7 @@
     "node": ">=8.9"
   },
   "dependencies": {
-    "exif-js": "^2.3.0",
+    "exif-parser": "^0.1.12",
     "ts-exif-parser": "^0.1.4"
   },
   "devDependencies": {

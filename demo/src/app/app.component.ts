@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
   srcBase64: string;
   srcFile: File;
 
-  applyExifOrientation: boolean;
+  applyExifOrientation = true;
   resizeImgResult: string;
   resizeIsProcessing: boolean;
   resizeProcessingTime: number;
@@ -79,7 +79,7 @@ export class AppComponent implements OnInit {
           maxHeight: +maxHeight,
         }),
         sharpen({
-          sharpness: +sharpness,
+          sharpness: +sharpness / 100,
         }),
       ).then(resultBase64 => {
         const t1                  = performance.now();

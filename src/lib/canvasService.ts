@@ -9,16 +9,6 @@ class CanvasServiceSrc {
   constructor() {
   }
 
-  drawImage(src: CanvasImageSource, width?: number, height?: number, sWidth?: number, sHeight?: number) {
-    if (!width || !height) {
-      this.canvasCtx.drawImage(src, 0, 0);
-    } else if (!sWidth || !sHeight) {
-      this.canvasCtx.drawImage(src, 0, 0, width, height);
-    } else {
-      this.canvasCtx.drawImage(src, 0, 0, sWidth, sHeight, 0, 0, width, height);
-    }
-  }
-
   drawBase64(base64: string): Promise<void> {
     return new Promise<void>(resolve => {
       base64ToImgElement(base64).then(img => {
@@ -28,11 +18,6 @@ class CanvasServiceSrc {
         resolve();
       });
     });
-  }
-
-  setSize(width: number, height: number) {
-    this.canvas.width  = width;
-    this.canvas.height = height;
   }
 
   crop(width: number, height: number) {
@@ -51,10 +36,6 @@ class CanvasServiceSrc {
     this.canvas.width  = width;
     this.canvas.height = height;
     this.canvasCtx.drawImage(this.helperCanvas, 0, 0);
-  }
-
-  getDataUrl(type: string, jpgQuality: number): string {
-    return this.canvas.toDataURL(type, jpgQuality);
   }
 }
 

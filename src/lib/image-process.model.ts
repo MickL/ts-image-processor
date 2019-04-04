@@ -33,10 +33,10 @@ export class ImageProcess {
       canvasService.drawBase64(this.base64).then(() => {
         operations.reduce((promiseChain, currentOperation) => {
           return promiseChain.then(() =>
-            currentOperation());
+            currentOperation(this.base64));
         }, Promise.resolve())
           .then(() => {
-            resolve(canvasService.getDataUrl(this.options.type, this.options.jpgQuality));
+            resolve(canvasService.canvas.toDataURL(this.options.type, this.options.jpgQuality));
           });
       });
     });

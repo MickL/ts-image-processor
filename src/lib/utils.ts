@@ -42,7 +42,7 @@ export function base64ToImgElement(base64: string): Promise<Base64ImageData> {
   });
 }
 
-export function base64ToArrayBuffer(base64: string) {
+export function base64ToArrayBuffer(base64: string): ArrayBuffer {
   base64 = base64.replace(/^data\:([^\;]+)\;base64,/gmi, '');
   const binaryString = atob(base64);
   const len = binaryString.length;

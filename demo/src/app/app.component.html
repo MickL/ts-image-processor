@@ -31,16 +31,16 @@
           <div class="row">
             <div class="col-12 col-md-5">
               <div class="form-group">
-                <label for="maxWidth">maxWidth</label>
+                <label for="maxWidth">maxWidth (px)</label>
                 <input #maxWidth id="maxWidth" type="number" class="form-control" value="1080" min="1">
               </div>
               <div class="form-group">
-                <label for="maxHeight">maxHeight</label>
+                <label for="maxHeight">maxHeight (px)</label>
                 <input #maxHeight id="maxHeight" type="number" class="form-control" value="1080" min="1">
               </div>
               <div class="form-group">
-                <label for="sharpness">sharpness</label>
-                <input #sharpness id="sharpness" type="number" class="form-control" value="0.15" min="1">
+                <label for="sharpness">sharpness (%)</label>
+                <input #sharpness id="sharpness" type="number" class="form-control" value="15" min="1" max="100">
               </div>
               <div class="form-group text-right">
                 <div class="btn btn-primary" (click)="onResize(maxWidth.value, maxHeight.value, sharpness.value)">

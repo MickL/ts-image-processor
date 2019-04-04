@@ -19,7 +19,7 @@ export interface Base64ImageData {
 }
 
 export interface OperatorFunction {
-  (): Promise<void>;
+  (blob?: string): Promise<void>;
 }
 
 export interface RotateOptions {
