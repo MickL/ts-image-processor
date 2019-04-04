@@ -1,6 +1,6 @@
 {
   "name": "ts-image-processor",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "Resize and rotate images with TypeScript/Angular",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
@@ -51,8 +51,7 @@
     "node": ">=8.9"
   },
   "dependencies": {
-    "exif-parser": "^0.1.12",
-    "ts-exif-parser": "^0.1.4"
+    "exif-parser": "^0.1.12"
   },
   "devDependencies": {
     "ava": "1.0.0-beta.7",
