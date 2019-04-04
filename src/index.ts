@@ -1,4 +1,4 @@
-export * from './lib/helper';
+export * from './lib/utils';
 export { resize } from './lib/resize';
 export * from './lib/resizeAndSharpen';
 export { sharpen } from './lib/sharpen';

@@ -51,7 +51,6 @@
     "node": ">=8.9"
   },
   "dependencies": {
-    "sha.js": "^2.4.11"
   },
   "devDependencies": {
     "ava": "1.0.0-beta.7",

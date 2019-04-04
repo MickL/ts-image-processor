@@ -1,4 +1,4 @@
-import { getImageForBlob } from './helper';
+import { base64ToImgElement } from './utils';
 
 class CanvasServiceSrc {
   readonly canvas         = document.createElement('canvas');
@@ -21,9 +21,9 @@ class CanvasServiceSrc {
     }
   }
 
-  drawBlob(blob: string): Promise<void> {
+  drawBase64(base64: string): Promise<void> {
     return new Promise<void>(resolve => {
-      getImageForBlob(blob).then(img => {
+      base64ToImgElement(base64).then(img => {
         this.canvas.width  = img.width;
         this.canvas.height = img.height;
         this.canvasCtx.drawImage(img.element, 0, 0);

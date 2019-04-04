@@ -1,11 +1,11 @@
 import { CanvasService } from './canvas.service';
 import { OutputOptions, SharpenOptions } from './models';
 
-// TODO: Resize multiple blob's at once
+// TODO: Resize multiple base64's at once
 // TODO: Accept File, too
-export function sharpen(blob: string, sharpenOptions: SharpenOptions, outputOptions: OutputOptions = {}): Promise<string> {
+export function sharpen(base64: string, sharpenOptions: SharpenOptions, outputOptions: OutputOptions = {}): Promise<string> {
   return new Promise<string>(resolve => {
-    CanvasService.drawBlob(blob).then(() => {
+    CanvasService.drawBase64(base64).then(() => {
       _sharpen(sharpenOptions).then(() => {
         resolve(CanvasService.getDataUrl(outputOptions.type, outputOptions.jpgQuality));
       });

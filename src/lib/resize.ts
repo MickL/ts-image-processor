@@ -1,12 +1,12 @@
 import { CanvasService } from './canvas.service';
-import { getImageForBlob } from './helper';
+import { base64ToImgElement } from './utils';
 import { OutputOptions, ResizeOptions } from './models';
 
-// TODO: Resize multiple blob's at once
+// TODO: Resize multiple base64's at once
 // TODO: Accept File, too
-export function resize(blob: string, resizeOptions: ResizeOptions, outputOptions: OutputOptions = {}): Promise<string> {
+export function resize(base64: string, resizeOptions: ResizeOptions, outputOptions: OutputOptions = {}): Promise<string> {
   return new Promise(resolve => {
-    _resize(blob, resizeOptions).then(() => {
+    _resize(base64, resizeOptions).then(() => {
       resolve(CanvasService.getDataUrl(outputOptions.type, outputOptions.jpgQuality));
     });
   });
@@ -18,9 +18,9 @@ export function resize(blob: string, resizeOptions: ResizeOptions, outputOptions
  * @see http://stackoverflow.com/a/19235791/5688490
  * @see http://stackoverflow.com/a/19262385/5688490
  */
-export function _resize(blob: string, options: ResizeOptions): Promise<void> {
+export function _resize(base64: string, options: ResizeOptions): Promise<void> {
   return new Promise(resolve => {
-    getImageForBlob(blob).then(img => {
+    base64ToImgElement(base64).then(img => {
       const resizeNeeded = img.width > options.maxWidth || img.height > options.maxHeight;
 
       if (!resizeNeeded) {

@@ -13,7 +13,7 @@ export interface OutputOptions {
   type?: string;
 }
 
-export interface BlobImageData {
+export interface Base64ImageData {
   width: number;
   height: number;
   element: HTMLImageElement;
