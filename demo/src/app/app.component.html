@@ -52,8 +52,8 @@
         </div>
 
         <div class="col-12 col-md-6">
-          <ng-container *ngIf="resizeIsLoading || resizeImgResult">
-            <small *ngIf="resizeIsLoading">Processing...</small>
+          <ng-container *ngIf="resizeIsProcessing || resizeImgResult">
+            <small *ngIf="resizeIsProcessing">Processing...</small>
             <ng-container *ngIf="resizeImgResult">
               <img [src]="resizeImgResult" alt="source" class="img-fluid">
               <div *ngIf="resizeProcessingTime">
@@ -97,8 +97,8 @@
           </div>
         </div>
         <div class="col-12 col-md-6">
-          <ng-container *ngIf="rotateIsLoading || rotateImgResult">
-            <small *ngIf="resizeIsLoading">Processing...</small>
+          <ng-container *ngIf="rotateIsProcessing || rotateImgResult">
+            <small *ngIf="rotateIsProcessing">Processing...</small>
             <ng-container *ngIf="rotateImgResult">
               <img [src]="rotateImgResult" alt="source" class="img-fluid">
               <div *ngIf="rotateProcessingTime">

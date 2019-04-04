@@ -4,7 +4,7 @@ import { base64ToImgElement } from '../utils';
 
 // Need img/canvas source
 // Need width/height
-function mirror(): OperatorFunction {
+export function mirror(): OperatorFunction {
   return (base64: string) => {
     return new Promise(resolve => {
       base64ToImgElement(base64).then(image => {

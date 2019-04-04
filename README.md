@@ -36,10 +36,11 @@ npm i ts-image-processor -S
 ```
 import { getBlobForFile, imageProcessor, resize, sharpen, output } from 'ts-image-processor';
 
-// Optionally convert File-object to blob (base64-string), e.g. if you have a file from <input>
+// If you have a file from <input>, convert it to base64-string first
 getBlobForFile(file).then(base64 => {
   // Use any of the functions with an existing blob (base64-string)
-  imageProcessor.src(base64)
+  imageProcessor
+    .src(base64)
     .pipe(
       resize({maxWidth: 800, maxHeight: 800}),
       sharpen(),

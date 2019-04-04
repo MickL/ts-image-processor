@@ -4,6 +4,7 @@ import {
   resize,
   sharpen,
   rotate,
+  mirror,
   output,
   imageProcessor,
   applyExifOrientation,
@@ -22,10 +23,10 @@ export class AppComponent implements OnInit {
 
   applyExifOrientation: boolean;
   resizeImgResult: string;
-  resizeIsLoading: boolean;
+  resizeIsProcessing: boolean;
   resizeProcessingTime: number;
   rotateImgResult: string;
-  rotateIsLoading: boolean;
+  rotateIsProcessing: boolean;
   rotateProcessingTime: number;
 
   onFileInputChange(file: File) {
@@ -68,10 +69,11 @@ export class AppComponent implements OnInit {
       return;
     }
 
-    this.resizeIsLoading = true;
-    const t0             = performance.now();
+    this.resizeIsProcessing = true;
+    const t0                = performance.now();
 
-    imageProcessor.src(this.srcBase64)
+    imageProcessor
+      .src(this.srcBase64)
       .pipe(
         resize({
           maxWidth:  +maxWidth,
@@ -84,7 +86,7 @@ export class AppComponent implements OnInit {
       ).then(resultBase64 => {
         const t1                  = performance.now();
         this.resizeProcessingTime = Math.round((t1 - t0) * 100) / 100;
-        this.resizeIsLoading      = false;
+        this.resizeIsProcessing   = false;
         this.resizeImgResult      = resultBase64;
       },
     )
@@ -92,23 +94,37 @@ export class AppComponent implements OnInit {
   }
 
   onRotate() {
-    // const t0 = performance.now();
-    //
-    // rotate(this.rotateImgResult).then(blob => {
-    //   const t1 = performance.now();
-    //   this.rotateProcessingTime = Math.round((t1 - t0) * 100) / 100;
-    //   this.rotateImgResult = blob;
-    // });
+    const t0 = performance.now();
+
+    imageProcessor
+      .src(this.rotateImgResult)
+      .pipe(
+        rotate(),
+        output(),
+      )
+      .then(base64 => {
+        const t1 = performance.now();
+        this.rotateProcessingTime = Math.round((t1 - t0) * 100) / 100;
+        this.rotateImgResult = base64;
+      })
+    ;
   }
 
   onMirror() {
-    // const t0 = performance.now();
-    //
-    // mirror(this.rotateImgResult).then(blob => {
-    //   const t1 = performance.now();
-    //   this.rotateProcessingTime = Math.round((t1 - t0) * 100) / 100;
-    //   this.rotateImgResult = blob;
-    // });
+    const t0 = performance.now();
+
+    imageProcessor
+      .src(this.rotateImgResult)
+      .pipe(
+        mirror(),
+        output(),
+      )
+      .then(base64 => {
+        const t1 = performance.now();
+        this.rotateProcessingTime = Math.round((t1 - t0) * 100) / 100;
+        this.rotateImgResult = base64;
+      })
+    ;
   }
 
   ngOnInit() {
