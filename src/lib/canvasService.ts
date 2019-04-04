@@ -3,12 +3,8 @@ import { base64ToImgElement } from './utils';
 class CanvasServiceSrc {
   readonly canvas         = document.createElement('canvas');
   readonly canvasCtx      = this.canvas.getContext('2d') as CanvasRenderingContext2D;
-  private helperCanvas    = document.createElement('canvas');
-  private helperCanvasCtx = this.helperCanvas.getContext('2d') as CanvasRenderingContext2D;
-  private defaultOptions  = {
-    jpgQuality: 0.9,
-    type:       'image/jpeg',
-  };
+  readonly helperCanvas    = document.createElement('canvas');
+  readonly helperCanvasCtx = this.helperCanvas.getContext('2d') as CanvasRenderingContext2D;
 
   constructor() {
   }
@@ -48,9 +44,18 @@ class CanvasServiceSrc {
     this.canvasCtx.drawImage(this.helperCanvas, 0, 0);
   }
 
+  resize(width: number, height: number) {
+    this.helperCanvas.width  = width;
+    this.helperCanvas.height = height;
+    this.helperCanvasCtx.drawImage(this.canvas, 0, 0, width, height);
+    this.canvas.width  = width;
+    this.canvas.height = height;
+    this.canvasCtx.drawImage(this.helperCanvas, 0, 0);
+  }
+
   getDataUrl(type: string, jpgQuality: number): string {
     return this.canvas.toDataURL(type, jpgQuality);
   }
 }
 
-export const CanvasService = new CanvasServiceSrc();
+export const canvasService = new CanvasServiceSrc();

@@ -9,7 +9,6 @@ Available processing functions:
 - rotate
 - mirror
 - noop
-- output
 
 _For best results I recommend to always use `sharpen` after `resize` - that's what Photoshop does, too ;)_
 
@@ -44,7 +43,6 @@ getBlobForFile(file).then(base64 => {
     .pipe(
       resize({maxWidth: 800, maxHeight: 800}),
       sharpen(),
-      output(),
     )
     .then(processedBase64 => {
       // Do whatever with your happy result :)

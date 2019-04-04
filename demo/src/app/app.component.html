@@ -73,12 +73,12 @@
             <div class="form-group">
               <div class="form-row">
                 <div class="col-6">
-                  <div class="btn btn-secondary btn-sm btn-block" (click)="rotateImgResult = srcBase64">
+                  <div class="btn btn-secondary btn-sm btn-block" (click)="rotateImgResult = srcBase64; rotateProcessingTime = null;">
                     Use source image
                   </div>
                 </div>
                 <div class="col-6">
-                  <button class="btn btn-secondary btn-sm btn-block" (click)="rotateImgResult = resizeImgResult" [disabled]="!resizeImgResult">
+                  <button class="btn btn-secondary btn-sm btn-block" (click)="rotateImgResult = resizeImgResult; rotateProcessingTime = null;" [disabled]="!resizeImgResult">
                     Use resized image
                   </button>
                 </div>

@@ -5,7 +5,6 @@ import {
   sharpen,
   rotate,
   mirror,
-  output,
   imageProcessor,
   applyExifOrientation,
   noop,
@@ -82,7 +81,6 @@ export class AppComponent implements OnInit {
         sharpen({
           sharpness: +sharpness,
         }),
-        output(),
       ).then(resultBase64 => {
         const t1                  = performance.now();
         this.resizeProcessingTime = Math.round((t1 - t0) * 100) / 100;
@@ -100,12 +98,11 @@ export class AppComponent implements OnInit {
       .src(this.rotateImgResult)
       .pipe(
         rotate(),
-        output(),
       )
       .then(base64 => {
-        const t1 = performance.now();
+        const t1                  = performance.now();
         this.rotateProcessingTime = Math.round((t1 - t0) * 100) / 100;
-        this.rotateImgResult = base64;
+        this.rotateImgResult      = base64;
       })
     ;
   }
@@ -117,12 +114,11 @@ export class AppComponent implements OnInit {
       .src(this.rotateImgResult)
       .pipe(
         mirror(),
-        output(),
       )
       .then(base64 => {
-        const t1 = performance.now();
+        const t1                  = performance.now();
         this.rotateProcessingTime = Math.round((t1 - t0) * 100) / 100;
-        this.rotateImgResult = base64;
+        this.rotateImgResult      = base64;
       })
     ;
   }

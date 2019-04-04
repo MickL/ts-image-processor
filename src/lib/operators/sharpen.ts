@@ -1,43 +1,46 @@
-import { CanvasService } from '../canvas.service';
-import { OperatorFunction, OutputOptions, SharpenOptions } from '../models';
+import { canvasService } from '../canvasService';
+import { OperatorFunction, SharpenOptions } from '../models';
 
 /**
  * @see http://www.html5rocks.com/en/tutorials/canvas/imagefilters/
  * @see http://stackoverflow.com/questions/18922880/html5-canvas-resize-downscale-image-high-quality/19235791#19235791
  */
-// widht/height
-// drawn canvas
 export function sharpen(options: SharpenOptions = {}): OperatorFunction {
-  return (base64: string) => {
+  return () => {
     return new Promise(resolve => {
       // Set default values
-      const sharpness = options.sharpness || .15;
+      let sharpness = options.sharpness || .15;
 
       if (sharpness <= 0) {
-        resolve(base64);
+        resolve();
         return;
       }
 
-      // TODO!
-      const imgWidth  = CanvasService.canvas.width;
-      const imgHeight = CanvasService.canvas.height;
+      if (sharpness > 1) {
+        sharpness = 1;
+      }
+
+      console.log('sharpen ' + sharpness);
+
+      const width  = canvasService.canvas.width;
+      const height = canvasService.canvas.height;
 
       const weights = [0, -1, 0, -1, 5, -1, 0, -1, 0];
       const katet   = Math.round(Math.sqrt(weights.length));
       const half    = (katet * 0.5) | 0;
-      const dstData = CanvasService.canvasCtx.createImageData(imgWidth, imgHeight);
+      const dstData = canvasService.canvasCtx.createImageData(width, height);
       const dstBuff = dstData.data;
-      const srcBuff = CanvasService.canvasCtx.getImageData(0, 0, imgWidth, imgHeight).data;
-      let y         = imgHeight;
+      const srcBuff = canvasService.canvasCtx.getImageData(0, 0, width, height).data;
+      let y         = height;
 
       while (y--) {
-        let x = imgWidth;
+        let x = width;
 
         while (x--) {
 
           const sy     = y;
           const sx     = x;
-          const dstOff = (y * imgWidth + x) * 4;
+          const dstOff = (y * width + x) * 4;
           let r        = 0;
           let g        = 0;
           let b        = 0;
@@ -49,8 +52,8 @@ export function sharpen(options: SharpenOptions = {}): OperatorFunction {
               const scy = sy + cy - half;
               const scx = sx + cx - half;
 
-              if (scy >= 0 && scy < imgHeight && scx >= 0 && scx < imgWidth) {
-                const srcOff = (scy * imgWidth + scx) * 4;
+              if (scy >= 0 && scy < height && scx >= 0 && scx < width) {
+                const srcOff = (scy * width + scx) * 4;
                 const wt     = weights[cy * katet + cx];
 
                 r += srcBuff[srcOff] * wt;
@@ -68,9 +71,9 @@ export function sharpen(options: SharpenOptions = {}): OperatorFunction {
         }
       }
 
-      CanvasService.canvasCtx.putImageData(dstData, 0, 0);
+      canvasService.canvasCtx.putImageData(dstData, 0, 0);
 
-      resolve(CanvasService.canvas.toDataURL());
+      resolve();
     });
   };
 }

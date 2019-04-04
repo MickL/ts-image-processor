@@ -10,7 +10,15 @@ import { SrcOptions } from './models';
  */
 class ImageProcessorService {
   src(base64: string, options: SrcOptions = {}): ImageProcess {
-    return new ImageProcess(base64);
+    // Set default values
+    if (!options.type) {
+      options.type = 'image/jpeg';
+    }
+    if (!options.jpgQuality) {
+      options.jpgQuality = 0.9;
+    }
+
+    return new ImageProcess(base64, options);
   }
 }
 

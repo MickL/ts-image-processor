@@ -1,7 +1,8 @@
-import { OperatorFunction } from './models';
+import { canvasService } from './canvasService';
+import { OperatorFunction, SrcOptions } from './models';
 
 export class ImageProcess {
-  constructor(private base64: string) {
+  constructor(private base64: string, private options: SrcOptions) {
   }
 
   /**
@@ -28,9 +29,16 @@ export class ImageProcess {
       return Promise.resolve(this.base64);
     }
 
-    return operations.reduce((promiseChain, currentOperation) => {
-      return promiseChain.then(base64 =>
-        currentOperation(base64).then(currentBase64 => currentBase64));
-    }, Promise.resolve(this.base64));
+    return new Promise(resolve => {
+      canvasService.drawBase64(this.base64).then(() => {
+        operations.reduce((promiseChain, currentOperation) => {
+          return promiseChain.then(() =>
+            currentOperation());
+        }, Promise.resolve())
+          .then(() => {
+            resolve(canvasService.getDataUrl(this.options.type, this.options.jpgQuality));
+          });
+      });
+    });
   }
 }

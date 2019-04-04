@@ -1,31 +1,42 @@
-import { CanvasService } from '../canvas.service';
-import { OperatorFunction } from '../models';
-import { base64ToImgElement } from '../utils';
+import { canvasService } from '../canvasService';
+import { OperatorFunction, RotateOptions } from '../models';
 
-// Need img/canvas source
-// Need width/height
-/**
- * TODO: Include RotateOptions.rotation
- * TODO: Include RotateOptions.clockwise
- */
 export function rotate(options: RotateOptions = {}): OperatorFunction {
-  return (base64: string) => {
-    return new Promise<string>(resolve => {
-      const t0 = performance.now();
-      base64ToImgElement(base64).then(image => {
-        CanvasService.setSize(image.height, image.width);
-        CanvasService.canvasCtx.rotate(90 * Math.PI / 180);
-        CanvasService.canvasCtx.translate(0, -CanvasService.canvas.width);
-        CanvasService.canvasCtx.drawImage(image.imgElement, 0, 0);
-        const t1 = performance.now();
-        resolve(CanvasService.canvas.toDataURL());
-        console.log(t1-t0);
-      });
+  return () => {
+    return new Promise<void>(resolve => {
+      // Set default values
+      if (typeof options.degrees === 'undefined') {
+        options.degrees = 90;
+      }
+      if (typeof options.clockwise === 'undefined') {
+        options.clockwise = true;
+      }
+
+      if (!options.clockwise) {
+        options.degrees = 360 - options.degrees as 90 | 180 | 270;
+      }
+
+      const oldWidth  = canvasService.canvas.width;
+      const oldHeight = canvasService.canvas.height;
+      let newWidth    = oldWidth;
+      let newHeight   = oldHeight;
+
+      if (options.degrees === 90 || options.degrees === 270) {
+        newWidth  = oldHeight;
+        newHeight = oldWidth;
+      }
+
+      canvasService.helperCanvas.width  = oldWidth;
+      canvasService.helperCanvas.height = oldHeight;
+      canvasService.helperCanvasCtx.drawImage(canvasService.canvas, 0, 0);
+
+      canvasService.canvas.width  = newWidth;
+      canvasService.canvas.height = newHeight;
+      canvasService.canvasCtx.translate(newWidth / 2, newHeight / 2);
+      canvasService.canvasCtx.rotate(options.degrees * Math.PI / 180);
+      canvasService.canvasCtx.drawImage(canvasService.helperCanvas, -oldWidth / 2, -oldHeight / 2);
+
+      resolve();
     });
   };
-}
-
-export interface RotateOptions {
-  rotation?: 90 | 180 | 270;
-  clockwise?: boolean;
 }
