@@ -1,6 +1,6 @@
 {
   "name": "ts-image-processor",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Resize and rotate images with TypeScript/Angular",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
@@ -31,8 +31,7 @@
     "reset": "git clean -dfx && git reset --hard && npm i",
     "clean": "trash build test",
     "all": "run-s cov:check doc:html",
-    "prepare-release": "run-s all version",
-    "publish": "git push --follow-tags origin master; npm publish"
+    "prepare-release": "run-s all version"
   },
   "scripts-info": {
     "info": "Display information about the package scripts",
