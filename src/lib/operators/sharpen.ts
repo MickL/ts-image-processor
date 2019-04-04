@@ -20,8 +20,6 @@ export function sharpen(options: SharpenOptions = {}): OperatorFunction {
         sharpness = 1;
       }
 
-      console.log('sharpen ' + sharpness);
-
       const width  = canvasService.canvas.width;
       const height = canvasService.canvas.height;
 

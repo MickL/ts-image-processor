@@ -19,7 +19,6 @@ export function resize(options: ResizeOptions): OperatorFunction {
       const resizeNeeded = oldWidth > options.maxWidth || oldHeight > options.maxHeight;
 
       if (!resizeNeeded) {
-        console.log(`No resizing needed, image of ${oldWidth}x${oldHeight}px is smaller than ${options.maxWidth}x${options.maxHeight}px`);
         resolve();
       } else {
         let newWidth: number;
@@ -36,8 +35,6 @@ export function resize(options: ResizeOptions): OperatorFunction {
           newWidth         = Math.round(oldWidth * newHeight / oldHeight);
           downscalingSteps = Math.ceil(Math.log(oldHeight / newHeight) / Math.log(2));
         }
-
-        console.log(`Resizing from ${oldWidth}x${oldHeight}px to ${newWidth}x${newHeight} in ${downscalingSteps} steps`);
 
         if (downscalingSteps === 1) {
           // The image can directly be resized to the final dimensions
