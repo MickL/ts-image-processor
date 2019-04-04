@@ -20,6 +20,9 @@
       true,
       "ignore-comments",
       "ignore-blank-lines"
-    ]
+    ],
+    "max-classes-per-file": false,
+    "no-empty-interface": false,
+    "callable-types": false
   }
 }

@@ -2,16 +2,25 @@
 
 This library provides basic image processing functions for use in TypeScript or Angular projects.
  
-Available functions:
+Available processing functions:
+- applyExifOrientation
 - resize
 - sharpen
-- resizeAndSharpen
 - rotate
 - mirror
+- noop
+- output
 
-_I recommend to always use `resizeAndSharpen` instead of `resize` - that's what Photoshop does, too ;)_
+_For best results I recommend to always use `sharpen` after `resize` - that's what Photoshop does, too ;)_
 
-Advantages:
+Available File/HTMLImageElement utility functions:
+- fileToBase64
+- fileToArrayBuffer
+- base64ToImgElement
+- base64ToArrayBuffer
+
+
+## Advantages
 - Smooth resizing of images in multiple resize-steps
 - Prevents error on iOS `Total canvas memory use exceeds the maximum limit`  by using only one canvas for everything
 - Tree shakable - if you use a bundler like Webpack it will not include unused functions in your project
@@ -24,20 +33,21 @@ See the demo [here](https://www.lawitzke.com/dev/typescript-image-processor/)
 npm i ts-image-processor -S
 ```
 
-
 ```
-import { getBlobForFile, resizeAndSharpen } from 'ts-image-processor';
+import { getBlobForFile, imageProcessor, resize, sharpen, output } from 'ts-image-processor';
 
 // Optionally convert File-object to blob (base64-string), e.g. if you have a file from <input>
-getBlobForFile(file).then(blob => {
+getBlobForFile(file).then(base64 => {
   // Use any of the functions with an existing blob (base64-string)
-  resizeAndSharpen(blob, {
-    width: 500,
-    height: 500,
-  })
-  .then(resultBlob => {
-    // Upload, display, etc.
-  });
+  imageProcessor.src(base64)
+    .pipe(
+      resize({maxWidth: 800, maxHeight: 800}),
+      sharpen(),
+      output(),
+    )
+    .then(processedBase64 => {
+      // Do whatever with your happy result :)
+    });
 });
 ```
 
@@ -46,8 +56,11 @@ Feel free to create pull requests
 
 ### Todo's
 - [ ] Cleanup files/folders + tslint
-- [ ] Operations should be pipable
-- [ ] Accept blob OR file for all functions
-- [ ] Accept multiple blob's / file's
-- [ ] Use Web Workers
+- [ ] `imageProcessor.src()` should handle wrong input
+- [ ] `imageProcessor.src()` should accept `File` 
+- [ ] `imageProcessor.src()` should accept `FileList`
+- [ ] `imageProcessor.src()` should accept `File[]`
+- [ ] `imageProcessor.src()` should accept `string[]` (base64-array)
+- [ ] `rotate()` should provide more options than just 90° rotation
+- [ ] Process everything within a Web Worker
 - [ ] Write advanced documentation with included [typedoc](https://typedoc.org/)

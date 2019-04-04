@@ -10,14 +10,20 @@
           <input #fileInput type="file" id="file" accept="image/jpeg, image/jpg, image/png"
                  (change)="onFileInputChange(fileInput.files[0])">
         </div>
+        <div class="form-group">
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="applyExifOrientation" #applyExifOrientation checked (change)="applyExifOrientationChanged(applyExifOrientation.checked)">
+            <label class="custom-control-label" for="applyExifOrientation">Apply exif orientation</label>
+          </div>
+        </div>
       </div>
       <div class="col-12 col-md-6">
-        <img [src]="imgSource" alt="source" class="img-fluid" *ngIf="imgSource">
+        <img [src]="srcBase64" alt="source" class="img-fluid" *ngIf="srcBase64">
       </div>
     </div>
   </div>
 
-  <ng-container *ngIf="imgSource">
+  <ng-container *ngIf="srcBase64">
     <div class="section">
       <h3>Resize & sharpen</h3>
       <div class="row">
@@ -50,7 +56,7 @@
             <small *ngIf="resizeIsLoading">Processing...</small>
             <ng-container *ngIf="resizeImgResult">
               <img [src]="resizeImgResult" alt="source" class="img-fluid">
-              <div>
+              <div *ngIf="resizeProcessingTime">
                 <small>Processed in {{resizeProcessingTime}}ms</small>
               </div>
             </ng-container>
@@ -67,7 +73,7 @@
             <div class="form-group">
               <div class="form-row">
                 <div class="col-6">
-                  <div class="btn btn-secondary btn-sm btn-block" (click)="rotateImgResult = imgSource">
+                  <div class="btn btn-secondary btn-sm btn-block" (click)="rotateImgResult = srcBase64">
                     Use source image
                   </div>
                 </div>

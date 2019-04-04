@@ -4,8 +4,7 @@ export interface ResizeOptions {
 }
 
 export interface SharpenOptions {
-  sharpness: number;
-  onlyWhenResizedPrct?: number;
+  sharpness?: number;
 }
 
 export interface OutputOptions {
@@ -16,5 +15,13 @@ export interface OutputOptions {
 export interface Base64ImageData {
   width: number;
   height: number;
-  element: HTMLImageElement;
+  imgElement: HTMLImageElement;
+}
+
+export interface OperatorFunction {
+  (base64: string): Promise<string>;
+}
+
+export interface SrcOptions {
+  applyExifOrientation?: boolean;
 }

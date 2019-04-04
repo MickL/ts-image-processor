@@ -1,10 +1,7 @@
-import EXIF = require('exif-js/exif');
 import { Base64ImageData } from './models';
 
 export function fileToBase64(file: File): Promise<string> {
   return new Promise<string>(resolve => {
-    console.log(EXIF.readFromBinaryFile(file));
-
     let reader: any = new FileReader();
 
     reader.addEventListener('load', () => {
@@ -35,9 +32,9 @@ export function base64ToImgElement(base64: string): Promise<Base64ImageData> {
 
     img.onload = () => {
       resolve({
-        element: img,
-        height:  img.naturalHeight || img.height,
-        width:   img.naturalWidth || img.width,
+        height:     img.naturalHeight || img.height,
+        imgElement: img,
+        width:      img.naturalWidth || img.width,
       });
     };
 

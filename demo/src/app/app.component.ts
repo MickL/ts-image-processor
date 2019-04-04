@@ -1,5 +1,14 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { getBlobForFile, mirror, resizeAndSharpen, rotate } from 'ts-image-processor';
+import {
+  fileToBase64,
+  resize,
+  sharpen,
+  rotate,
+  output,
+  imageProcessor,
+  applyExifOrientation,
+  noop,
+} from '../../../build/main';
 
 @Component({
   selector:    'app-root',
@@ -8,7 +17,10 @@ import { getBlobForFile, mirror, resizeAndSharpen, rotate } from 'ts-image-proce
 })
 export class AppComponent implements OnInit {
   @ViewChild('fileInput') fileInput: ElementRef<HTMLInputElement>;
-  imgSource: string;
+  srcBase64: string;
+  srcFile: File;
+
+  applyExifOrientation: boolean;
   resizeImgResult: string;
   resizeIsLoading: boolean;
   resizeProcessingTime: number;
@@ -19,14 +31,34 @@ export class AppComponent implements OnInit {
   onFileInputChange(file: File) {
     this.fileInput.nativeElement.value = '';
     this.clear();
+    this.srcFile = file;
+    this.showSource();
+  }
 
-    getBlobForFile(file).then(blob => {
-      this.imgSource = blob;
+  showSource() {
+    fileToBase64(this.srcFile).then(base64 => {
+      imageProcessor
+        .src(base64)
+        .pipe(
+          this.applyExifOrientation ? applyExifOrientation() : noop(),
+        )
+        .then(result => {
+          this.srcBase64 = result;
+        });
     });
   }
 
+  applyExifOrientationChanged(checked: boolean) {
+    this.applyExifOrientation = checked;
+    if (this.srcBase64) {
+      this.clear();
+      this.showSource();
+    }
+  }
+
   clear() {
-    this.imgSource       = null;
+    this.srcBase64       = null;
+    // this.srcFile         = null;
     this.resizeImgResult = null;
     this.rotateImgResult = null;
   }
@@ -37,43 +69,46 @@ export class AppComponent implements OnInit {
     }
 
     this.resizeIsLoading = true;
-    const t0 = performance.now();
+    const t0             = performance.now();
 
-    resizeAndSharpen(
-      this.imgSource,
-      {
-        maxWidth:  +maxWidth,
-        maxHeight: +maxHeight,
+    imageProcessor.src(this.srcBase64)
+      .pipe(
+        resize({
+          maxWidth:  +maxWidth,
+          maxHeight: +maxHeight,
+        }),
+        sharpen({
+          sharpness: +sharpness,
+        }),
+        output(),
+      ).then(resultBase64 => {
+        const t1                  = performance.now();
+        this.resizeProcessingTime = Math.round((t1 - t0) * 100) / 100;
+        this.resizeIsLoading      = false;
+        this.resizeImgResult      = resultBase64;
       },
-      {
-        sharpness: +sharpness,
-      },
-    ).then(resultBlob => {
-      const t1                  = performance.now();
-      this.resizeProcessingTime = Math.round((t1 - t0) * 100) / 100;
-      this.resizeIsLoading      = false;
-      this.resizeImgResult      = resultBlob;
-    });
+    )
+    ;
   }
 
   onRotate() {
-    const t0 = performance.now();
-
-    rotate(this.rotateImgResult).then(blob => {
-      const t1 = performance.now();
-      this.rotateProcessingTime = Math.round((t1 - t0) * 100) / 100;
-      this.rotateImgResult = blob;
-    });
+    // const t0 = performance.now();
+    //
+    // rotate(this.rotateImgResult).then(blob => {
+    //   const t1 = performance.now();
+    //   this.rotateProcessingTime = Math.round((t1 - t0) * 100) / 100;
+    //   this.rotateImgResult = blob;
+    // });
   }
 
   onMirror() {
-    const t0 = performance.now();
-
-    mirror(this.rotateImgResult).then(blob => {
-      const t1 = performance.now();
-      this.rotateProcessingTime = Math.round((t1 - t0) * 100) / 100;
-      this.rotateImgResult = blob;
-    });
+    // const t0 = performance.now();
+    //
+    // mirror(this.rotateImgResult).then(blob => {
+    //   const t1 = performance.now();
+    //   this.rotateProcessingTime = Math.round((t1 - t0) * 100) / 100;
+    //   this.rotateImgResult = blob;
+    // });
   }
 
   ngOnInit() {

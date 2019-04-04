@@ -5,16 +5,18 @@ class CanvasServiceSrc {
   readonly canvasCtx      = this.canvas.getContext('2d') as CanvasRenderingContext2D;
   private helperCanvas    = document.createElement('canvas');
   private helperCanvasCtx = this.helperCanvas.getContext('2d') as CanvasRenderingContext2D;
-  private defaultOptions = {
+  private defaultOptions  = {
     jpgQuality: 0.9,
-    type: 'image/jpeg',
+    type:       'image/jpeg',
   };
 
   constructor() {
   }
 
-  drawImage(src: CanvasImageSource, width: number, height: number, sWidth?: number, sHeight?: number) {
-    if (!sWidth || !sHeight) {
+  drawImage(src: CanvasImageSource, width?: number, height?: number, sWidth?: number, sHeight?: number) {
+    if (!width || !height) {
+      this.canvasCtx.drawImage(src, 0, 0);
+    } else if (!sWidth || !sHeight) {
       this.canvasCtx.drawImage(src, 0, 0, width, height);
     } else {
       this.canvasCtx.drawImage(src, 0, 0, sWidth, sHeight, 0, 0, width, height);
@@ -26,7 +28,7 @@ class CanvasServiceSrc {
       base64ToImgElement(base64).then(img => {
         this.canvas.width  = img.width;
         this.canvas.height = img.height;
-        this.canvasCtx.drawImage(img.element, 0, 0);
+        this.canvasCtx.drawImage(img.imgElement, 0, 0);
         resolve();
       });
     });
@@ -41,13 +43,13 @@ class CanvasServiceSrc {
     this.helperCanvas.width  = width;
     this.helperCanvas.height = height;
     this.helperCanvasCtx.drawImage(this.canvas, 0, 0, width, height, 0, 0, width, height);
-    this.canvas.width = width;
+    this.canvas.width  = width;
     this.canvas.height = height;
     this.canvasCtx.drawImage(this.helperCanvas, 0, 0);
   }
 
-  getDataUrl(type = this.defaultOptions.type, quality = this.defaultOptions.jpgQuality): string {
-    return this.canvas.toDataURL(type, quality);
+  getDataUrl(type: string, jpgQuality: number): string {
+    return this.canvas.toDataURL(type, jpgQuality);
   }
 }
 
