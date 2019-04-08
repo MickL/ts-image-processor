@@ -18,8 +18,10 @@ export function rotate(options: RotateOptions = {}): OperatorFunction {
 
       if (options.degree !== 0 && options.degree !== 90 && options.degree !== 180 && options.degree !== 270 && options.degree !== 360) {
         throw(new Error(`Rotation degree needs to be 0, 90, 180, 270 or 360.`));
+        resolve();
         return;
       } else if (options.degree === 0 || options.degree === 360) {
+        resolve();
         return;
       }
 
