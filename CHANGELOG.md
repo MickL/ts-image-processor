@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.1.14"></a>
+## [1.1.14](https://github.com/MickL/ts-image-processing/compare/v1.1.13...v1.1.14) (2019-04-08)
+
+
+
 <a name="1.1.13"></a>
 ## [1.1.13](https://github.com/MickL/ts-image-processing/compare/v1.1.12...v1.1.13) (2019-04-08)
 
