@@ -44,6 +44,7 @@ export function rotate(options: RotateOptions = {}): OperatorFunction {
       canvasService.canvasCtx.translate(newWidth / 2, newHeight / 2);
       canvasService.canvasCtx.rotate(options.degree * Math.PI / 180);
       canvasService.canvasCtx.drawImage(canvasService.helperCanvas, -oldWidth / 2, -oldHeight / 2);
+      canvasService.canvasCtx.resetTransform();
 
       resolve();
     });

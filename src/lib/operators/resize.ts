@@ -44,7 +44,6 @@ export function resize(options: ResizeOptions): OperatorFunction {
           // Step 1
           let oldScale         = 1;
           let currentStepScale = 1;
-          // canvasService.resize(oldWidth * currentStepScale, oldHeight * currentStepScale);
 
           // Step i
           for (let i = 1; i < downscalingSteps; i++) {

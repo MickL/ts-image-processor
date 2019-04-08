@@ -6,6 +6,7 @@ export function mirror(): OperatorFunction {
     return new Promise(resolve => {
       canvasService.canvasCtx.scale(-1, 1);
       canvasService.canvasCtx.drawImage(canvasService.canvas, -canvasService.canvas.width, 0);
+      canvasService.canvasCtx.resetTransform();
       resolve();
     });
   };

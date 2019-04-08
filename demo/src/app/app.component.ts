@@ -28,6 +28,9 @@ export class AppComponent implements OnInit {
   rotateIsProcessing: boolean;
   rotateProcessingTime: number;
 
+  constructor() {
+  }
+
   onFileInputChange(file: File) {
     this.fileInput.nativeElement.value = '';
     this.clear();
@@ -58,7 +61,6 @@ export class AppComponent implements OnInit {
 
   clear() {
     this.srcBase64       = null;
-    // this.srcFile         = null;
     this.resizeImgResult = null;
     this.rotateImgResult = null;
   }
