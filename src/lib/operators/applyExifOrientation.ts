@@ -13,6 +13,11 @@ export function applyExifOrientation(): OperatorFunction {
       const data   = base64ToArrayBuffer(originalBase64);
       const result = parser.create(data).parse();
 
+      if (!result || !result.tags || !result.tags.Orientation) {
+        resolve();
+        return;
+      }
+
       switch (result.tags.Orientation) {
         // -90°
         case 6:
