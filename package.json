@@ -1,6 +1,6 @@
 {
   "name": "ts-image-processor",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "description": "Resize and rotate images with TypeScript/Angular",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
@@ -10,7 +10,7 @@
   "keywords": [],
   "scripts": {
     "describe": "npm-scripts-info",
-    "build": "run-s clean && run-p build:main",
+    "build": "run-s clean && run-p build:module",
     "build:main": "tsc -p tsconfig.json",
     "build:module": "tsc -p tsconfig.module.json",
     "fix": "run-s fix:*",
