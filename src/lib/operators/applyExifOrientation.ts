@@ -22,13 +22,13 @@ export function applyExifOrientation(): OperatorFunction {
           break;
         // -180°
         case 3:
-          rotate({degrees: 180})().then(() => {
+          rotate({degree: 180})().then(() => {
             resolve();
           });
           break;
         // -270°
         case 8:
-          rotate({degrees: 270})().then(() => {
+          rotate({degree: 270})().then(() => {
             resolve();
           });
           break;
@@ -48,7 +48,7 @@ export function applyExifOrientation(): OperatorFunction {
           break;
         // -180° + mirrored
         case 4:
-          rotate({degrees: 180})().then(() => {
+          rotate({degree: 180})().then(() => {
             mirror()().then(() => {
               resolve();
             });
@@ -56,7 +56,7 @@ export function applyExifOrientation(): OperatorFunction {
           break;
         // -270° + mirrored
         case 7:
-          rotate({degrees: 270})().then(() => {
+          rotate({degree: 270})().then(() => {
             mirror()().then(() => {
               resolve();
             });

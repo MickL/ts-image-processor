@@ -5,15 +5,22 @@ export function rotate(options: RotateOptions = {}): OperatorFunction {
   return () => {
     return new Promise<void>(resolve => {
       // Set default values
-      if (typeof options.degrees === 'undefined') {
-        options.degrees = 90;
+      if (typeof options.degree === 'undefined') {
+        options.degree = 90;
       }
       if (typeof options.clockwise === 'undefined') {
         options.clockwise = true;
       }
 
       if (!options.clockwise) {
-        options.degrees = 360 - options.degrees as 90 | 180 | 270;
+        options.degree = 360 - options.degree as 90 | 180 | 270;
+      }
+
+      if (options.degree !== 0 && options.degree !== 90 && options.degree !== 180 && options.degree !== 270 && options.degree !== 360) {
+        throw(new Error(`Rotation degree needs to be 0, 90, 180, 270 or 360.`));
+        return;
+      } else if (options.degree === 0 || options.degree === 360) {
+        return;
       }
 
       const oldWidth  = canvasService.canvas.width;
@@ -21,7 +28,7 @@ export function rotate(options: RotateOptions = {}): OperatorFunction {
       let newWidth    = oldWidth;
       let newHeight   = oldHeight;
 
-      if (options.degrees === 90 || options.degrees === 270) {
+      if (options.degree === 90 || options.degree === 270) {
         newWidth  = oldHeight;
         newHeight = oldWidth;
       }
@@ -33,7 +40,7 @@ export function rotate(options: RotateOptions = {}): OperatorFunction {
       canvasService.canvas.width  = newWidth;
       canvasService.canvas.height = newHeight;
       canvasService.canvasCtx.translate(newWidth / 2, newHeight / 2);
-      canvasService.canvasCtx.rotate(options.degrees * Math.PI / 180);
+      canvasService.canvasCtx.rotate(options.degree * Math.PI / 180);
       canvasService.canvasCtx.drawImage(canvasService.helperCanvas, -oldWidth / 2, -oldHeight / 2);
 
       resolve();

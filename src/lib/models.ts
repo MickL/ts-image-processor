@@ -23,6 +23,6 @@ export interface OperatorFunction {
 }
 
 export interface RotateOptions {
-  degrees?: 90 | 180 | 270;
+  degree?: number;
   clockwise?: boolean;
 }
