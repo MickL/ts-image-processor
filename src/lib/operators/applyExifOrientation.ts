@@ -11,7 +11,14 @@ export function applyExifOrientation(): OperatorFunction {
   return (originalBase64: string) => {
     return new Promise(resolve => {
       const data   = base64ToArrayBuffer(originalBase64);
-      const result = parser.create(data).parse();
+      let result;
+
+      try {
+        result = parser.create(data).parse();
+      } catch {
+        resolve();
+        return;
+      }
 
       if (!result || !result.tags || !result.tags.Orientation) {
         resolve();
