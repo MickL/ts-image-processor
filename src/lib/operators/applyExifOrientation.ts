@@ -15,7 +15,7 @@ export function applyExifOrientation(): OperatorFunction {
 
       try {
         result = parser.create(data).parse();
-      } catch {
+      } catch(e) {
         resolve();
         return;
       }
