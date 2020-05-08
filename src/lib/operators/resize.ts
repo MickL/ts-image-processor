@@ -49,11 +49,11 @@ export function resize(options: ResizeOptions): OperatorFunction {
           for (let i = 1; i < downscalingSteps; i++) {
             oldScale         = currentStepScale;
             currentStepScale = currentStepScale * .5;
-            canvasService.canvasCtx.drawImage(canvasService.canvas, 0, 0, oldWidth * oldScale, oldHeight * oldScale, 0, 0, oldWidth * currentStepScale, oldHeight * currentStepScale);
+            canvasService.resizeImage({width: oldWidth * oldScale, height: oldHeight * oldScale}, {width: oldWidth * currentStepScale, height: oldHeight * currentStepScale});
           }
 
           // Down-scaling step i+1 (draw final result)
-          canvasService.canvasCtx.drawImage(canvasService.canvas, 0, 0, oldWidth * currentStepScale, oldHeight * currentStepScale, 0, 0, newWidth, newHeight);
+          canvasService.resizeImage({width: oldWidth * currentStepScale, height: oldHeight * currentStepScale}, {width: newWidth, height: oldHeight * newHeight});
           canvasService.crop(newWidth, newHeight);
         }
       }
