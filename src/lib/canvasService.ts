@@ -37,6 +37,15 @@ class CanvasServiceSrc {
     this.canvas.height = height;
     this.canvasCtx.drawImage(this.helperCanvas, 0, 0);
   }
+
+  resizeImage(from: {width: number, height: number}, to: {width: number, height: number}) {
+    this.helperCanvas.width = to.width;
+    this.helperCanvas.height = to.height;
+    this.helperCanvasCtx.drawImage(this.canvas, 0, 0, from.width, from.height, 0, 0, to.width, to.width);
+    this.canvas.width = to.width;
+    this.canvas.height = to.height;
+    this.canvasCtx.drawImage(this.helperCanvas, 0, 0);
+  }
 }
 
 export const canvasService = new CanvasServiceSrc();
